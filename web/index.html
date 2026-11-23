@@ -2,10 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="SubDir Commander 38: a disk commander for the Commodore 64, in BASIC and machine code." />
     <title>SubDir Commander 38 for the C64</title>
+    <link rel="stylesheet" href="src/style.css" />
+    <script>
+      if (location.protocol === "file:") {
+        const base = document.createElement("base");
+        base.href = new URL("public/", location.href).href;
+        document.head.appendChild(base);
+      }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   </head>
   <body>
     <main>
@@ -19,19 +27,19 @@
             from one drive to another.
           </p>
           <div class="downloads">
-            <a class="btn primary" href="/files/subdir38.d64" download="subdir38.d64">
+            <a class="btn primary" href="files/subdir38.d64" download="subdir38.d64">
               Disk image <span>subdir38.d64</span>
             </a>
-            <a class="btn" href="/files/SubDirCommand38-ml.prg" download="%SubDirCommand38.prg">
+            <a class="btn" href="files/SubDirCommand38-ml.prg" download="%SubDirCommand38.prg">
               Machine code <span>%SubDirCommand38 · 20 blocks</span>
             </a>
-            <a class="btn" href="/files/SubDirCommand.38.prg" download="SubDirCommand.38.prg">
+            <a class="btn" href="files/SubDirCommand.38.prg" download="SubDirCommand.38.prg">
               BASIC <span>SubDirCommand.38 · 28 blocks</span>
             </a>
           </div>
         </div>
         <figure class="screen">
-          <img src="/screen.png" width="384" height="272"
+          <img src="screen.png" width="384" height="272"
                alt="SubDir Commander on a C64 screen: the file list on the left, the key panel on the right" />
           <figcaption>Running in VICE on a PAL C64 with a 1541</figcaption>
         </figure>
@@ -100,6 +108,5 @@ RUN</code></pre>
       </section>
     </main>
     <footer>SubDir Commander 38 · 2026</footer>
-    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
