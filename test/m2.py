@@ -1,0 +1,36 @@
+import time, sys
+sys.path.insert(0, "/tmp/t")
+from vice import *
+v = mlstart("/tmp/t/fbmlw.d64", d9="/tmp/t/big9.d64", drive=ord('9'))
+def hl():
+    rv = v.rev_rows(); sc = v.screen()
+    return [(r, sc[r][:24].strip()) for r in range(2,24) if rv[r] > 10]
+print("start", hl())
+for i in range(3): v.mkey(DOWN)
+print("3 down", hl())
+v.mkey(RIGHT); print("R", hl(), v.screen()[2][:20])
+v.mkey(RIGHT); print("R", hl(), v.screen()[2][:20])
+v.mkey(RIGHT); print("R (last page)", hl(), v.screen()[2][:20])
+v.mkey(UP); print("UP", hl())
+v.mkey(DOWN); v.mkey(DOWN); print("DOWN DOWN", hl())
+v.mkey(LEFT); print("L", hl(), v.screen()[2][:20])
+v.mkey(LEFT); print("L", hl(), v.screen()[2][:20])
+v.mkey(LEFT); print("L (first page)", hl(), v.screen()[2][:20])
+v.mkey(UP); print("UP at top", hl())
+for i in range(21): v.mkey(DOWN)
+print("21 down", hl())
+v.mkey(DOWN); print("22nd down flips", hl(), v.screen()[2][:20])
+v.mkey(UP); print("up flips back", hl(), v.screen()[2][:20])
+# start address on file21 (row 23)
+v.mkey(ord('5')); print("start adr:", v.screen()[23][:27])
+# rename file21 -> renamed21
+v.mkey(ord('3')); print("prompt:", v.screen()[23][:27])
+v.mtype(pet("renamed21")); print("typed:", v.screen()[23][:27])
+v.mkey(RET); print("after rename:", v.screen()[23][:27])
+# delete it
+v.mkey(ord('6')); print("confirm:", v.screen()[23][:27])
+v.mkey(pet('y')[0]); print("after delete:", v.screen()[23][:27])
+v.mkey(RIGHT); v.mkey(RIGHT); print("last page bfree:", [l[:27] for l in v.screen()[2:24] if 'blocks' in l])
+v.mkey(ord('2')); print("after validate: rows", v.screen()[0][:27], "|", v.screen()[2][:27])
+v.show("after validate")
+v.quit()

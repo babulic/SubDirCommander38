@@ -1,0 +1,27 @@
+import time, sys
+sys.path.insert(0, "/tmp/t")
+from vice import *
+v = start("/tmp/t/fb38w.d64", d9="/tmp/t/big9.d64")
+def copy(name, drive):
+    v.key(ord('4'), at=5170)
+    v.wait_line(4340, 60); time.sleep(0.3)
+    v.keys(pet(name)+[RET])
+    v.wait_line(4341, 30); time.sleep(0.3)
+    v.keys(pet(drive)+[RET])
+    t0=time.time()
+    v.wait_line(5170, 1200); time.sleep(1)
+    return time.time()-t0
+for i in range(20): v.key(DOWN)
+print("oxford pascal 8->9 as 'oxford' took", copy("oxford", "9"))
+v.show("after big copy")
+v.key(ord('1'), at=5170)
+v.wait_line(5007, 60); time.sleep(0.5)
+v.key(ord('9'), at=5007); v.key(RET, at=5007)
+v.wait_line(5170, 120)
+v.key(RIGHT); v.key(RIGHT)
+for i in range(14): v.key(DOWN)
+v.show("on seqfile?")
+print("seqfile 9->8 (disk full) took", copy("", "8"))
+v.show("disk full")
+v.shot("/tmp/t/s38_diskfull.png")
+v.quit()

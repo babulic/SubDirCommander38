@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SubDir Commander 38: a disk commander for the Commodore 64, in BASIC and machine code." />
+    <title>SubDir Commander 38 for the C64</title>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <div class="hero-text">
+          <p class="kicker">Commodore 64 · 1541 / 1541-II · SD2IEC</p>
+          <h1>SubDir Commander 38</h1>
+          <p class="lead">
+            A disk commander for a stock C64. List a drive, move through it a line or a page
+            at a time, and run, load, rename, copy, delete or validate files, including copies
+            from one drive to another.
+          </p>
+          <div class="downloads">
+            <a class="btn primary" href="/files/subdir38.d64" download="subdir38.d64">
+              Disk image <span>subdir38.d64</span>
+            </a>
+            <a class="btn" href="/files/SubDirCommand38-ml.prg" download="%SubDirCommand38.prg">
+              Machine code <span>%SubDirCommand38 · 20 blocks</span>
+            </a>
+            <a class="btn" href="/files/SubDirCommand.38.prg" download="SubDirCommand.38.prg">
+              BASIC <span>SubDirCommand.38 · 28 blocks</span>
+            </a>
+          </div>
+        </div>
+        <figure class="screen">
+          <img src="/screen.png" width="384" height="272"
+               alt="SubDir Commander on a C64 screen: the file list on the left, the key panel on the right" />
+          <figcaption>Running in VICE on a PAL C64 with a 1541</figcaption>
+        </figure>
+      </header>
+
+      <section>
+        <h2>Run it</h2>
+        <p>In VICE, attach the disk to drive 8:</p>
+        <pre><code>x64sc -8 subdir38.d64</code></pre>
+        <p>Then on the C64. The file names contain capital letters, so <code>?</code> stands in for them:</p>
+        <pre><code>LOAD"%*",8
+RUN</code></pre>
+        <p>for the machine code version, or</p>
+        <pre><code>LOAD"?UB?IR?OMMAND.38",8
+RUN</code></pre>
+        <p>for the BASIC one. Add <code>-9 other.d64</code> to try copying between drives.</p>
+      </section>
+
+      <section>
+        <h2>Keys</h2>
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><th>CRSR up / down</th><td>one line</td></tr>
+              <tr><th>CRSR left / right</th><td>page up / page down (22 lines)</td></tr>
+              <tr><th>1 · F1</th><td>choose the drive and list it</td></tr>
+              <tr><th>2 · F2</th><td>validate the disk</td></tr>
+              <tr><th>3 · F3</th><td>rename</td></tr>
+              <tr><th>4 · F4</th><td>copy: new name, then target drive (default: the current one)</td></tr>
+              <tr><th>5 · F5</th><td>start address of a program</td></tr>
+              <tr><th>6 · F6</th><td>delete, after y/n</td></tr>
+              <tr><th>7 · F7 · RETURN</th><td>run a program, open a directory or disk image</td></tr>
+              <tr><th>8 · F8</th><td>load a program without running it</td></tr>
+              <tr><th>↑</th><td>SD2IEC: one directory level up</td></tr>
+              <tr><th>←</th><td>quit to BASIC</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="cols">
+        <div>
+          <h2>Two versions</h2>
+          <p>
+            <strong>Machine code</strong> draws the list straight into screen memory, so moving and
+            paging are instant. It keeps the directory in the RAM under the BASIC ROM and copies
+            between drives through a 33 KB buffer.
+          </p>
+          <p>
+            <strong>BASIC</strong> is the readable one, with a 138-byte helper in the cassette buffer
+            for drive-to-drive copies.
+          </p>
+        </div>
+        <div>
+          <h2>Loading done right</h2>
+          <p>
+            Programs are handed to BASIC the way you would type <code>LOAD</code> and <code>RUN</code>,
+            so BASIC sets its end-of-program pointer itself. A program loaded from the commander
+            saves at its own size.
+          </p>
+          <p>
+            A failed copy (disk full, write error, RUN/STOP) removes the partial file and gives its
+            blocks back.
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer>SubDir Commander 38 · 2026</footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
